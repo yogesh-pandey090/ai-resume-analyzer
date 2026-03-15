@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Resume Analysis Result</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Resume Analysis</h1>
+
+<h2>ATS Score: {{score}}%</h2>
+
+<!-- Recommended Career -->
+
+<h3>Recommended Career Path</h3>
+
+<div class="skill">
+{{recommended_job}}
+</div>
+
+
+<!-- Resume Keywords -->
+
+<h3>Resume Keywords Found</h3>
+
+{% if keywords_found %}
+    {% for k in keywords_found %}
+        <div class="skill">{{k}}</div>
+    {% endfor %}
+{% else %}
+<p>No keywords detected</p>
+{% endif %}
+
+
+<!-- Doughnut Chart -->
+
+<canvas id="scoreChart"></canvas>
+
+
+<h3>Your Skills</h3>
+
+{% if skills %}
+    {% for skill in skills %}
+        <div class="skill">{{skill}}</div>
+    {% endfor %}
+{% else %}
+<p>No skills detected</p>
+{% endif %}
+
+
+<h3>Matched Skills</h3>
+
+{% if matched %}
+    {% for skill in matched %}
+        <div class="skill">{{skill}}</div>
+    {% endfor %}
+{% else %}
+<p>No matched skills</p>
+{% endif %}
+
+
+<h3>Missing Skills</h3>
+
+{% if missing %}
+    {% for skill in missing %}
+        <div class="skill">{{skill}}</div>
+    {% endfor %}
+{% else %}
+<p>No missing skills</p>
+{% endif %}
+
+
+<!-- AI Feedback -->
+
+<h3>AI Feedback</h3>
+
+{% if tips %}
+    {% for tip in tips %}
+        <div class="skill">{{tip}}</div>
+    {% endfor %}
+{% else %}
+<p>Your resume looks good for this role.</p>
+{% endif %}
+
+
+<!-- Radar Chart -->
+
+<h3>Skill Strength</h3>
+
+<div class="chart-box">
+<canvas id="radarChart"></canvas>
+</div>
+
+
+<br>
+
+<a href="/">
+<button>Analyze Another Resume</button>
+</a>
+
+</div>
+
+
+<script>
+
+/* ATS SCORE CHART */
+
+const score = {{score}}
+
+const ctx = document.getElementById('scoreChart')
+
+new Chart(ctx,{
+
+type:'doughnut',
+
+data:{
+labels:['Matched Score','Remaining'],
+
+datasets:[{
+
+data:[score,100-score],
+
+backgroundColor:[
+'#00c6ff',
+'#ff5f6d'
+],
+
+borderWidth:0
+
+}]
+
+},
+
+options:{
+plugins:{
+legend:{
+position:'top'
+}
+}
+}
+
+})
+
+
+
+/* RADAR SKILL CHART */
+
+const radar = document.getElementById("radarChart")
+
+new Chart(radar,{
+
+type:"radar",
+
+data:{
+
+labels:[
+"Python",
+"Machine Learning",
+"SQL",
+"HTML",
+"JavaScript"
+],
+
+datasets:[{
+
+label:"Skill Strength",
+
+data:[80,60,70,50,40],
+
+backgroundColor:"rgba(54,162,235,0.2)",
+
+borderColor:"rgba(54,162,235,1)",
+
+borderWidth:2
+
+}]
+
+}
+
+})
+
+</script>
+
+</body>
+
+</html>

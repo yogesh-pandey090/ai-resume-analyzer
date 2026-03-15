@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AI Resume Analyzer</title>
+
+<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Resume Analyzer</h1>
+
+<form action="/analyze" method="post" enctype="multipart/form-data">
+
+<input type="file" name="resume" required>
+
+<br><br>
+
+<select name="jobrole">
+
+<option>Data Scientist</option>
+<option>Web Developer</option>
+<option>Data Analyst</option>
+
+</select>
+
+<br><br>
+
+<button type="submit">Analyze Resume</button>
+
+</form>
+
+</div>
+
+</body>
+</html>
